@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem
@@ -23,6 +23,7 @@ def newMenuItem(restaurant_id):
         newItem = MenuITem(name =  request.form['name'], restaurant_id = restaurant_id)
         session.add(newItem)
         session.commit()
+        return redirect(url_for('restaurantMenu', restaurant_id = restaurant_id))
     return "page to create a new menu item. Task 1 complete!"
 	
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/edit/')
